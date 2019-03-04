@@ -1,0 +1,501 @@
+@font-size: 14px;
+@line-height: 20px;
+@small-font-size: 12px;
+@small-line-height: 18px;
+
+@icon-large-size: @line-height + @small-line-height * 2;
+@icon-small-size: @small-line-height;
+
+@zindex: 1000;
+
+.suredy-file {
+	display: block;
+	position: relative;
+	background-color: #fff;
+	min-height: @line-height + 2px;
+	padding-right: 24px;
+}
+
+// suredy file icon
+.suredy-file .file-icon {
+	color: #c7691b;
+}
+
+// file item
+.suredy-file > .file-item {
+	display: inline-block;
+	position: relative;
+	margin-right: 6px;
+	margin-bottom: 1px;
+
+	& > input[type="file"],
+	& > form {
+		position: fixed;
+		top: -100px;
+		left: 0px;
+	}
+
+	& > .file-icon {
+		display: inherit;
+		float: left;
+		text-align: center;
+	}
+
+	& > .file-info {
+		display: inherit;
+		float: left;
+		width: 100%;
+		height: 100%;
+
+		& > .file-name {
+			font-size: @font-size;
+			height: @line-height;
+			line-height: @line-height;
+			color: #000;
+		}
+
+		& > .file-type, 
+		& > .file-size, 
+		& > .file-time {
+			font-size: @small-font-size;
+			height: @small-line-height;
+			line-height: @small-line-height;
+			color: #aaa;
+		}
+	}
+
+	&.file > .file-info {
+		& > .file-name:hover {
+		    position: relative;
+		    height: auto;
+		    word-wrap: break-word;
+		    background-color: #eee;
+		    color: #000;
+		    white-space: normal;
+		    z-index: @zindex;
+		}
+
+		& > .file-name.download:hover {
+			cursor: pointer;
+		    color: #31b0d5;
+		    text-decoration: underline;
+		}
+	}
+
+	// process bar
+	& .process-bar {
+		display: none;
+		color: #fff;
+		position: absolute;
+
+		& > .process-icon,
+		& > .process-info {
+			display: inline-block;
+			float: left;
+		}
+	}
+
+	&.upload .process-bar,
+	&.uploading .process-bar {
+		display: inline-block;
+	}
+
+	&.upload .process-bar {
+		cursor: pointer;
+	}
+
+	// remove btn
+	& > .remove {
+		display: none;
+		position: absolute;
+	    padding: 0px;
+	    width: @line-height;
+	    height: @line-height;
+	    line-height: @line-height;
+	    border-radius: @line-height / 2 !important;
+
+	    & > i.glyphicon {
+	    	top: 0px;
+	    }
+	}
+
+	&.upload,
+	&.uploaded {
+		& > .remove {
+			display: inline-block;
+		}
+	}
+
+	// upload btn
+	&.add-file {
+		cursor: pointer;
+		font-weight: inherit;
+		margin-bottom: 0px;
+
+		& > .file-icon {
+			color: #aaa; //#31b0d5;
+		}
+
+		& > .file-info > .file-name {
+			color: #aaa; //#31b0d5;
+		}
+
+		& > input[type="file"] {
+			position: fixed;
+			top: -100px;
+			left: 0px;
+		}
+
+		&:hover {
+			& > .file-icon {
+				color: #31b0d5; //#31b0d5;
+			}
+
+			& > .file-info > .file-name {
+				color: #31b0d5; //#31b0d5;
+			}
+		}
+	}
+}
+
+// tiled view
+.suredy-file.tiled > .file-item {
+	width: @icon-large-size + @line-height * 10;
+	height: @icon-large-size;
+	padding-left: @icon-large-size;
+
+	& > .file-icon {
+		width: @icon-large-size;
+		height: @icon-large-size;
+		line-height: @icon-large-size;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		font-size: @icon-large-size - 6px;
+	}
+
+	& > .file-info {
+		& > .file-name {
+			white-space: nowrap;
+			-o-text-overflow: ellipsis;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
+
+		& > .file-time {
+			display: none;
+		}
+	}
+
+	& .process-bar {
+		top: 0px;
+		left: 0px;
+		height: 100%;
+		width: 100%;
+		padding-left: @icon-large-size;
+		background-color: rgba(49, 176, 213, 0.8);
+		filter: ~"progid:DXImageTransform.Microsoft.gradient(startColorstr=#b431b0d5,endColorstr=#b431b0d5)";
+
+		& > .process-icon {
+			width: @icon-large-size;
+			height: @icon-large-size;
+			line-height: @icon-large-size;
+			font-size: @icon-large-size / 2;
+			text-align: center;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+
+		& > .process-info {
+			width: 100%;
+			height: @icon-large-size;
+			line-height: @icon-large-size;
+			font-size: @icon-large-size / 3;
+			text-align: center;
+		}
+	}
+
+	& > .remove {
+	    top: 0px;
+	    left: 0px;
+	    font-size: @small-font-size;
+	}
+
+	// upload btn
+	&.add-file {
+		& > .file-info  > .file-name {
+			height: @icon-large-size;
+			line-height: @icon-large-size;
+		}
+	}
+}
+
+// icon view
+.suredy-file.icon > .file-item {
+	width: @icon-large-size + 24px;
+	height: @icon-large-size + @line-height * 4;
+	padding-top: @icon-large-size;
+
+	& > .file-icon {
+		height: @icon-large-size;
+		width: @icon-large-size + 24px;
+		line-height: @icon-large-size;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		font-size: @icon-large-size - 6px;
+	}
+
+	& > .file-info {
+		& > .file-name {
+			word-wrap: break-word;
+			height: 100%;
+			overflow: hidden;
+			text-align: center;
+		}
+
+		& > .file-type, 
+		& > .file-size, 
+		& > .file-time {
+			display: none;
+		}
+	}
+
+	& .process-bar {
+		top: 0px;
+		left: 0px;
+		height: 100%;
+		width: 100%;
+		padding-top: @icon-large-size;
+		background-color: rgba(49, 176, 213, 0.8);
+		filter: ~"progid:DXImageTransform.Microsoft.gradient(startColorstr=#b431b0d5,endColorstr=#b431b0d5)";
+
+		& > .process-icon {
+			height: @icon-large-size;
+			width: @icon-large-size + 24px;
+			line-height: @icon-large-size;
+			font-size: @icon-large-size / 2;
+			text-align: center;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+
+		& > .process-info {
+			width: 100%;
+			height: @icon-large-size;
+			line-height: @icon-large-size;
+			font-size: @font-size;
+			text-align: center;
+		}
+	}
+
+	& > .remove {
+	    top: 0px;
+	    left: 12px;
+	    font-size: @small-font-size;
+	}
+}
+
+// list view
+.suredy-file.list > .file-item {
+	display: block;
+	height: @line-height;
+	padding-left: @line-height + 6px;
+
+	& > .file-icon {
+		display: inline-block;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		width: @line-height + 6px;
+		height: @line-height;
+		line-height: @line-height;
+		font-size: @font-size;
+		text-align: center;
+	}
+
+	& > .file-info {
+		display: inline-block;
+
+		& > .file-name {
+			white-space: nowrap;
+			-o-text-overflow: ellipsis;
+			text-overflow: ellipsis;
+			overflow: hidden;
+		}
+
+		& > .file-type,
+		& > .file-size,
+		& > .file-time {
+			display: none;
+		}
+	}
+
+	& .process-bar {
+		top: 0px;
+		left: 0px;
+		height: 100%;
+		width: 100%;
+		padding-left: @line-height + 6px;
+		background-color: rgba(49, 176, 213, 0.8);
+		filter: ~"progid:DXImageTransform.Microsoft.gradient(startColorstr=#b431b0d5,endColorstr=#b431b0d5)";
+
+		& > .process-icon {
+			height: @line-height;
+			width: @line-height + 6px;
+			line-height: @line-height;
+			font-size: @font-size;
+			text-align: center;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+
+		& > .process-info {
+			width: 100%;
+			height: @line-height;
+			line-height: @line-height;
+			font-size: @font-size;
+		}
+	}
+
+	& > .remove {
+	    top: 0px;
+	    font-size: @small-font-size;
+	    margin-left: -@line-height;
+	}
+}
+
+// details view
+.suredy-file.detail > .file-item {
+	display: block;
+	height: @line-height;
+	padding-left: @line-height + 6px;
+	padding-right: 280px;
+
+	& > .file-icon {
+		display: inline-block;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		width: @line-height + 6px;
+		height: @line-height;
+		line-height: @line-height;
+		font-size: @font-size;
+		text-align: center;
+	}
+
+	& > .file-info {
+		display: inline-block;
+
+		& > .file-name,
+		& > .file-time,
+		& > .file-type,
+		& > .file-size {
+			display: inline-block;
+			float: left;
+			white-space: nowrap;
+			-o-text-overflow: ellipsis;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			float: left;
+		}
+
+		& > .file-name {
+			width: 100%;
+		}
+
+		& > .file-time {
+			width: 140px;
+			text-align: center;
+			position: absolute;
+			top: 0px;
+			right: 140px;
+		}
+
+		& > .file-type {
+			width: 40px;
+			text-align: center;
+			position: absolute;
+			top: 0px;
+			right: 100px;
+
+		}
+
+		& > .file-size {
+			width: 100px;
+			text-align: center;
+			position: absolute;
+			top: 0px;
+			right: 0px;
+		}
+	}
+
+	& .process-bar {
+		top: 0px;
+		left: 0px;
+		height: 100%;
+		width: 100%;
+		padding-left: @line-height + 6px;
+		background-color: rgba(49, 176, 213, 0.8);
+		filter: ~"progid:DXImageTransform.Microsoft.gradient(startColorstr=#b431b0d5,endColorstr=#b431b0d5)";
+
+		& > .process-icon {
+			height: @line-height;
+			width: @line-height + 6px;
+			line-height: @line-height;
+			font-size: @font-size;
+			text-align: center;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+		}
+
+		& > .process-info {
+			width: 100%;
+			height: @line-height;
+			line-height: @line-height;
+			font-size: @font-size;
+		}
+	}
+
+	& > .remove {
+	    top: 0px;
+	    font-size: @small-font-size;
+	    margin-left: -@line-height;
+	}
+}
+
+// change view btn
+.suredy-file > .change-view {
+	position: absolute !important;
+	top: 0px;
+	right: 0px;
+	z-index: @zindex + 1;
+
+	& > ul.dropdown-menu {
+		max-width: 90px;
+		min-width: 90px;
+		right: 0px;
+		left: inherit;
+	}
+}
+
+// hidden file info
+@media (width: 767px) {
+	.suredy-file.detail {
+		& > .file-item {
+			padding-right: 0px;
+
+			& > .file-info {
+				& > .file-type, 
+				& > .file-size, 
+				& > .file-time, {
+			    	display: none !important;	
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,177 @@
+
+@cell-width: 32px;
+@title-color: #5bc0de;
+@font-size: 14px;
+@font-color: #555;
+@hover-color: #f0f0f0;
+
+div.suredy-datetimepicker {
+	position: absolute;
+	background-color: @title-color;
+	z-index: 1060;
+
+	& .btn, & td {
+		font-size: @font-size;
+	}
+}
+
+div.suredy-datetimepicker > .content > .picker {
+	border: 1px solid @title-color;
+	color: @title-color;
+
+	& > tbody > tr > td {
+		text-align: center;
+		vertical-align: middle;
+	}
+
+	& .btn {
+		border: none;
+	}
+
+	// hover picker
+	& > tbody {
+		& > tr.year, & > tr.month, & > tr.date {
+			& > td:hover {
+				background-color: @hover-color;
+				color: @font-color;
+			}
+		}
+
+		& > tr.foot > td > div.btn.manual-close {
+			border-radius: 24px !important;
+		}
+	}
+}
+
+// year view
+div.suredy-datetimepicker > .content > .picker.year {
+	& > tbody > tr.year {
+		height: @cell-width * 2;
+		background-color: #fff;
+		color: @font-color;
+
+		& > td {
+			width: @cell-width * (7/3);
+			cursor: pointer;
+			font-size: @font-size + 3px;
+		}
+	}
+
+	& > tbody > tr.foot > td {
+		padding: 2px;
+	}
+
+	& > tbody > tr.year {
+		& > td.toyear {
+			background-color: @hover-color;
+			color: @title-color;
+		}
+
+		& > td.active {
+			background-color: @title-color;
+			color: #fff;
+		}
+	}
+}
+
+// month view
+div.suredy-datetimepicker > .content > .picker.month {
+	& > tbody > tr.month {
+		height: @cell-width * (6/4);
+		background-color: #fff;
+		color: @font-color;
+
+		& > td {
+			width: @cell-width * (7/3);
+			cursor: pointer;
+			font-size: @font-size + 3px;
+		}
+	}
+
+	& > tbody > tr.foot > td {
+		padding: 2px;
+	}
+
+	& > tbody > tr.month {
+		& > td.tomonth {
+			background-color: @hover-color;
+			color: @title-color;
+		}
+
+		& > td.active {
+			background-color: @title-color;
+			color: #fff;
+		}
+	}
+}
+
+// day view
+div.suredy-datetimepicker > .content > .picker.date {
+	& > tbody > tr.week {
+		height: @cell-width;
+		background-color: #fff;
+
+		& > td {
+			border-top: 1px solid @title-color;
+			border-bottom: 1px solid @title-color;
+			width: @cell-width;
+		}
+	}
+
+	& > tbody > tr.date {
+		height: @cell-width;
+		background-color: #fff;
+		color: @font-color;
+
+		& > td {
+			width: @cell-width;
+			cursor: pointer;
+		}
+
+		& > td.pre {
+			color: #ccc;
+		}
+
+		& > td.next {
+			color: #ccc;
+		}
+	}
+
+	& > tbody > tr.foot > td {
+		padding: 2px;
+	}
+
+	& > tbody > tr.date {
+		& > td.today {
+			background-color: @hover-color;
+			color: @title-color;
+		}
+
+		& > td.active {
+			background-color: @title-color;
+			color: #fff;
+		}
+	}
+}
+
+// time view
+div.suredy-datetimepicker > .content > .picker.time {
+	& > tbody > tr > td {
+	    width: @cell-width * 3;
+	    text-align: center;
+	    font-size: @font-size + 2px;
+
+	    &.ok,
+	    &.clean-data {
+	    	width: @cell-width;
+	    }
+
+	    & ul.dropdown-menu {
+	    	max-height: @cell-width * 6;
+	    	width: @cell-width * 3;
+	    	max-width: @cell-width * 3;
+	    	min-width: @cell-width * 3;
+	    	overflow-y: auto;
+	    }
+	}
+}

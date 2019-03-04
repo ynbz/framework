@@ -1,0 +1,174 @@
+<!-- 这里是列表模版 -->
+<div class="row">
+	<div class="col-md-12" style="margin-bottom: 5px;">
+		<div class="btn btn-primary btn-xs new-form-define">新建模版</div>
+		<div class="btn btn-danger btn-xs delete-form-define">删除选中模版</div>
+		<div class="btn btn-success btn-xs flush-data-list">刷新列表</div>
+		<div class="btn btn-success btn-xs pull-right toggle-data-filter-panel-btn" role="button" data-toggle="collapse" href="#data-filter" aria-expanded="false" aria-controls="data-filter">
+			筛选&nbsp;
+			<i class="icon-double-angle-down"></i>
+		</div>
+		<span class="filter-info pull-right text-info" style="margin-left: 5px; height: 20px; line-height: 20px; font-size: 12px;"></span>
+	</div>
+</div>
+<div class="row collapse" id="data-filter">
+	<form class="form-defind-data-list-filter">
+		<div class="form-group col-md-6">
+			<div class="input-group">
+				<div class="input-group-addon">模板名称</div>
+				<input class="form-control input-sm" type="text" name="name" value="">
+			</div>
+		</div>
+		<div class="form-group col-md-3">
+			<div class="input-group">
+				<div class="input-group-addon">是否启用</div>
+				<select class="form-control input-sm" name="enable">
+					<option value=""></option>
+					<option value="1">启用</option>
+					<option value="0">停用</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-group col-md-3">
+			<div class="input-group">
+				<div class="input-group-addon">版本编号</div>
+				<input class="form-control input-sm" type="text" name="version" value="">
+			</div>
+		</div>
+
+		<div class="form-group col-md-12">
+			<div class="btn btn-danger btn-xs do-filter-btn">确定</div>
+			<button type="reset" class="btn btn-info btn-xs" onclick="$('.filter-info').empty();">清空</button>
+		</div>
+	</form>
+</div>
+
+<div class="data-list" style="min-height: 22px; background-color: #fff;"></div>
+
+<script type="text/javascript">
+	var loadDatalist = function(page, pageSize) {
+		require([ 'suredy', 'jqueryForm' ], function(Suredy) {
+			$('.do-filter-btn').toggleClass('disabled');
+
+			var order = [];
+			// get order
+			$('.data-list th[field],th[order]').each(function(i, dom) {
+				var $th = $(dom);
+
+				if (!$th.attr('field') || !$th.attr('order'))
+					return true;
+
+				var o = order[order.length] = {};
+				o[$th.attr('field')] = $th.attr('order');
+			});
+
+			$('form.form-defind-data-list-filter').ajaxSubmit({
+				url : Suredy.ctxp + '/formbuilder/list',
+				type : 'post',
+				dataType : 'html',
+				data : {
+					page : page,
+					pageSize : pageSize,
+					order : JSON.stringify(order),
+				},
+				success : function(html) {
+					$('.do-filter-btn').toggleClass('disabled');
+
+					if (!html) {
+
+						alert('加载表单模版列表失败。');
+						return;
+					}
+
+					$('.data-list').empty().html(html);
+				},
+				error : function() {
+					alert('加载表单模版列表失败。');
+					$('.do-filter-btn').toggleClass('disabled');
+				}
+			});
+		})
+	};
+
+	loadDatalist();
+
+	$(function() {
+		var $info = $('.filter-info');
+
+		$('input,select', 'form.form-defind-data-list-filter').on('change', function(e) {
+			$info.empty();
+			$('input,select', 'form.form-defind-data-list-filter').each(function(i, dom) {
+				var $this = $(this);
+				var val = $this.is('select') ? $this.find('option:selected').text() : $this.val();
+
+				if ($this.val())
+					$info.text($info.text() + '<' + $this.prev().text() + '>：' + val + '、');
+			});
+		});
+
+		$('.do-filter-btn').on('click', function(e) {
+			if ($(this).is('disabled'))
+				return;
+
+			loadDatalist();
+		});
+
+		$('.new-form-define').on('click', function(e) {
+			window.open(Suredy.ctxp + '/formbuilder/open/0');
+		});
+
+		$('.delete-form-define').on('click', function(e) {
+			var $this = $(this);
+
+			if ($this.is('disabled'))
+				return;
+
+			var $rows = Suredy.List.checked($('.data-list table.form-define-data-list'));
+
+			if ($rows.length == 0) {
+				alert('提示：\n请选择模版后再进行次操作！\n');
+				return;
+			}
+
+			if (!window.confirm('是否确认执行删除操作？\n\n提示：\n删除后的数据将无法恢复！！！\n')) {
+				return;
+			}
+
+			$this.toggleClass('disabled');
+
+			var ids = [];
+
+			$rows.each(function(i) {
+				ids[i] = $rows.eq(i).data('id');
+			});
+
+			$.ajax({
+				url : Suredy.ctxp + '/formbuilder/delete',
+				traditional : true,
+				data : {
+					'formDefineIds' : ids,
+				},
+				type : 'post',
+				dataType : 'json',
+				success : function(data) {
+					$this.toggleClass('disabled');
+
+					if (!data || !data.success)
+						alert((data && data.msg) || '删除失败，原因未知！');
+					else {
+						alert((data && data.msg) || '操作成功！');
+						loadDatalist();
+					}
+				},
+				error : function() {
+					$this.toggleClass('disabled');
+					alert('删除失败，服务器异常！');
+				}
+			});
+		});
+
+		$('.flush-data-list').on('click', function(e) {
+			loadDatalist();
+		});
+	});
+</script>

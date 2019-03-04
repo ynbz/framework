@@ -1,0 +1,14 @@
+<span id="cal-slide-tick" style="display: none"></span>
+<div id="cal-slide-content" class="cal-event-list">
+	<ul class="unstyled list-unstyled">
+		<%
+		 	_.each(events, function(event) { 
+		 		var text = '[' + (event.subjectType == 2 ? '班组' : '个人') + '] ' + event.name; 	
+		 %>
+			<li>
+				<span class="pull-left event <%= event['className'] %>" style="margin-top:5px;"></span>&nbsp;
+				<a href="javascript:void(0);" data-event-id="<%= event.id %>" class="event-item" onclick="showTask(this);"><%=  text %></a>
+			</li>
+		<% }) %>
+	</ul>
+</div>

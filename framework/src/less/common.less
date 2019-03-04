@@ -1,0 +1,59 @@
+/* common */
+* {
+	font-family: @font-family;
+}
+
+html,body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	color: #333;
+	font-size: @font-size;
+}
+
+body {
+	background-image: url("../img/dotted.png");
+}
+
+.border-0 {
+	border: none;
+}
+
+.padding-0 {
+	padding: 0 !important;
+}
+
+.margin-0 {
+	margin: 0 !important;
+}
+
+.text-nowrap {
+	white-space: nowrap;
+	-o-text-overflow: ellipsis;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+label.suredy-checkbox {
+	margin: 0px;
+	padding: 0px;
+
+	& > i.icon-suredy-checkbox {
+		&:before {
+			content: "\f096";
+		}
+
+		&.checked:before {
+			content: "\f046";
+		}
+	}
+}
+
+.badge {
+    border-radius: 10px !important;
+}
+
+.alert[data-notify="container"] {
+	z-index: @zindex-alert-notify + 1 !important;
+}

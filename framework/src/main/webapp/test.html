@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="../../favicon.ico" rel="icon">
+<title>水滴科技协同办公系统</title>
+
+<link rel="stylesheet" href="core/css/bootstrap.min.css">
+<link rel="stylesheet" href="core/css/font-awesome.min.css">
+<link rel="stylesheet" href="core/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="css/suredy-ui.css">
+
+<!--[if lt IE 9]>
+<script src="core/js/html5shiv.min.js"></script>
+<script src="core/js/respond.min.js"></script>
+<![endif]-->
+</head>
+<body>
+   <form name="form" id="form">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-addon">
+						<span class="title-content">代码</span>
+					</div>
+					<input type="text" class="form-control" name="userCode" id="userCode" value="U=sysmanager/OU=manager/O=system">
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-group">
+				<div class="input-group">
+					<div class="input-group-addon">
+						<span class="title-content">密码</span>
+					</div>
+					<input type="text" class="form-control" name="password" id="password" value="password">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row text-center">
+		<div class="btn btn-primary" id="submit">提交</div>
+	</div>	
+	</form>
+	<script src="core/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		
+		$('#submit').click(function() {
+			var userCode = $('#userCode').val();  
+			var password = $('#password').val();
+			var para = {
+				"userCode": userCode,
+				"password": password
+			};
+			$.ajax({
+				url : 'mobile/login',
+				dataType : 'JSON',
+				type : 'POST',
+				data : para,
+				success : function(result) {
+					console.log(result);
+					var success  = result.authenticated;
+					if (success == 1) {
+						window.location.replace('./mobile/main');
+					} else {
+						alert(result.reason);
+					}
+				},
+				error : function(a, b, c) {
+					alert('服务器错误! ' + b);
+				}
+			});
+		});			
+		
+	});
+</script>		
+	
+</body>
+</html>

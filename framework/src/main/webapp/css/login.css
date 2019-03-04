@@ -1,0 +1,41 @@
+body {
+	background: rgb(54, 157, 204);
+	margin: 0;
+	border: 0;
+	font-family: "Microsoft YaHei UI", "Microsoft YaHei", "微软雅黑", "SimSun", "宋体";
+}
+
+.bg-top,.bg-bottom {
+	top: 0;
+	width: 100%;
+	position: fixed;
+	z-index: -15;
+}
+
+.bg-bottom {
+	top: auto;
+	bottom: 0;
+}
+
+.logo {
+	margin: 50px 0;
+}
+
+.logo img {
+	height: 100px;
+}
+
+.login-form-icon {
+	width: 30px;
+}
+
+.select-user-tree {
+	position: absolute;
+	z-index: 99999;
+	width: 250px;
+	max-height: 450px;
+	margin-left: -30px;
+	overflow: auto;
+	background-color: #eee;
+	border: #ddd;
+}

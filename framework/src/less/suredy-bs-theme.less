@@ -1,0 +1,74 @@
+@suredy-navbar-color: #fff;
+@suredy-navbar-background-color: #4F779B;
+@suredy-navbar-active-bg-color: #40607d;
+@suredy-navbar-link-hover-color: #9bd0ff;
+@suredy-navbar-dropdown-menu-hover-color: #dcdcdc;
+
+* {
+	border-radius: 0px !important;
+}
+
+.navbar-default {
+	background-color: @suredy-navbar-background-color;
+
+	& .navbar-brand,
+	& .navbar-brand:hover, 
+	& .navbar-brand:focus {
+		color: @suredy-navbar-color;
+	}
+	
+	& .navbar-nav {
+		&  > li > a {
+			background-color: transparent;
+			color: @suredy-navbar-color;
+		}
+
+		& > li > a:hover, 
+		& > li > a:focus,
+		& > li.active > a,
+		& > li.active > a:focus,
+		& > li.active > a:hover,
+		& > li.open > a, 
+		& > li.open > a:focus {
+			background-color: @suredy-navbar-active-bg-color;
+			color: @suredy-navbar-color;
+		}
+
+		& .dropdown-menu > li > a:hover,
+		& .dropdown-menu > li > a:focus {
+			background-color: @suredy-navbar-dropdown-menu-hover-color;
+		}
+
+		& .dropdown-menu > .active > a, 
+		& .dropdown-menu > .active > a:hover, 
+		& .dropdown-menu > .active > a:focus {
+			background-color: @suredy-navbar-active-bg-color;
+		}
+	}
+
+	& .navbar-text {
+		color: @suredy-navbar-color;
+	}
+
+	& .navbar-link {
+		color: @suredy-navbar-color;
+
+		&:hover {
+			color: @suredy-navbar-link-hover-color;
+		}
+	}
+
+	& .navbar-toggle {
+		border-color: @suredy-navbar-color;
+
+		& .icon-bar {
+			background-color: @suredy-navbar-color;
+		}
+	}
+
+	@media (max-width: 767px) {
+		& .navbar-nav .open .dropdown-menu > li > a {
+		    color: @suredy-navbar-color;
+		}	
+	}
+}

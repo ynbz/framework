@@ -1,0 +1,106 @@
+<div class="suredy-file"></div>
+
+<br>
+
+<div class="upload-all btn btn-lg btn-danger">上传所有文件</div>
+<div class="remove-all btn btn-lg btn-danger">清除所有已上传文件</div>
+
+<script>
+	require([ 'suredyFile' ], function(File) {
+		// 初始化文件管理组件
+		var $file = File('.suredy-file', {
+			// 基本参数
+			fileCount : -1,
+			fileType : '',
+			view : 'detail',
+			changeView : true,
+			addFile : true,
+			editable : true,
+			download : true,
+
+			// 组件上传参数
+			autoUpload : false,
+			fieldName : 'file',
+			extendData : 'test',
+		});
+
+		// 初始化文件列表
+		$.ajax({
+			url : Suredy.ctxp + '/file/list-files',
+			data : {
+				fileIds : '',
+				extendData : 'test',
+			},
+			type : 'post',
+			dataType : 'json',
+			success : function(data, textStatus, jqXHR) {
+				if (!data || !data.success)
+					alert('No file be loaded.');
+
+				$.each(data.data, function(i, d) {
+					File.addFile($file, d);
+				});
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+			}
+		});
+
+		// 上传所有文件
+		$('.upload-all').on('click', function(event) {
+			File.uploadAll($file, function(result) {
+				// 所有文件上传成功后的回调函数
+				if (!result)
+					return;
+
+				// result.ok : 上传成功的文件（jQuery对象）
+				// result.failed : 上传失败的文件（jQuery对象）
+
+				// 成功
+				$.each(result.ok, function(i, r) {
+					var $item = r.$item;
+					var data = r.data;
+					$item.css('background-color', 'green');
+					File.plugin($file).ERR_MESSAGE('文件信息: ' + data.id + ' -- ' + data.fileName, '提示');
+				})
+
+				// 失败
+				$.each(result.failed, function(i, dom) {
+					$(dom).css('background-color', 'gray');
+				})
+			});
+		});
+
+		// 单个文件上传前的监听事件
+		$file.on('preupload.suredy.filemanager', '>.file-item.file', function(event) {
+			File.plugin($file).ERR_MESSAGE('上传前事件', '提示');
+		});
+
+		// 单个文件上传完成后的监听事件
+		$file.on('uploaded.suredy.filemanager', '>.file-item.file', function(event, result) {
+			// result.success为boolean值。表示是否上传成功			
+			File.plugin($file).ERR_MESSAGE('上传完毕事件, success:' + result.success, '提示');
+			console.log(result.data); // 上传文件的数据
+		});
+
+		// 移除所有已经上传的文件（慎用）
+		$('.remove-all').on('click', function(event) {
+			File.removeAll($file);
+		});
+
+		// 单个文件删除前的监听事件
+		$file.on('predelete.suredy.filemanager', function(event, result) {
+			File.plugin($file).ERR_MESSAGE('删除前事件', '提示');
+			console.log('predelete >>>>>>>>>>>>>>>>>>>>>>>>>>>> : ');
+			console.log(result.$item);
+			console.log(result.data);
+		});
+
+		// 单个文件删除完成后的监听事件
+		$file.on('deleted.suredy.filemanager', function(event, result) {
+			// result.success为boolean值。表示是否上传成功
+			File.plugin($file).ERR_MESSAGE('删除完毕事件, success:' + result.success, '提示');
+			console.log(result.$item); // 上传文件的数据
+			console.log(result.data); // 上传文件的数据
+		});
+	});
+</script>

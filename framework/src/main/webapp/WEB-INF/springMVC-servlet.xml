@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util" xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/mvc  
+						http://www.springframework.org/schema/mvc/spring-mvc.xsd
+						http://www.springframework.org/schema/util 
+						http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- annotation support -->
+	<mvc:annotation-driven />
+	<!-- scan package -->
+	<context:component-scan base-package="com.suredy" />
+
+	<!-- property loader -->
+	<context:property-placeholder location="classpath:*.properties" />
+
+	<!-- jdbc data source -->
+	<import resource="spring-jdbc.xml" />
+
+	<!-- resources -->
+	<mvc:resources location="/" mapping="/**/*.js" />
+	<mvc:resources location="/" mapping="/**/*.css" />
+	<mvc:resources location="/" mapping="/**/*.html" />
+	<mvc:resources location="/component/" mapping="/component/**/*" />
+	<mvc:resources location="/core/fonts/" mapping="/core/fonts/**/*" />
+	<mvc:resources location="/img/" mapping="/img/**/*" />
+	<mvc:resources location="/test/pdf-view/" mapping="/test/pdf-view/**/*" />
+	<mvc:resources location="/app/cms/" mapping="/app/cms/**/*" />
+	<!-- Interceptor -->
+	<mvc:interceptors>
+		<bean class="org.springframework.orm.hibernate4.support.OpenSessionInViewInterceptor">
+			<property name="sessionFactory" ref="sessionFactory" />  
+		</bean>		
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/mobile/**/*" />
+			<mvc:exclude-mapping path="/login" />
+			<mvc:exclude-mapping path="/check-img/**/*" />
+			<mvc:exclude-mapping path="/config/ou/tree/**/*" />
+			<mvc:exclude-mapping path="/login-data/**/*" />
+			<mvc:exclude-mapping path="/index-content*" />
+			<bean class="com.suredy.core.mvc.LoginCheckInterceptor" />
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.suredy.core.mvc.TokenInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<!-- this is for springmvc 4.1+, but not completed, wait for new spring version. -->
+	<!-- mvc:view-resolvers> <mvc:freemarker cache-views="true" prefix="" suffix=".ftl" /> </mvc:view-resolvers -->
+	<!-- mvc:freemarker-configurer> <mvc:template-loader-path location="/freemarker" /> </mvc:freemarker-configurer -->
+
+	<!-- view resolver -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="requestContextAttribute" value="request" />
+		<property name="cache" value="true" />
+		<property name="prefix" value="" />
+		<property name="suffix" value=".ftl" />
+		<property name="contentType" value="text/html;charset=UTF-8"></property>
+		<property name="order" value="0" />
+	</bean>
+	
+	<!-- freemarker config -->
+	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">0</prop>
+				<prop key="default_encoding">UTF-8</prop>
+				<prop key="number_format">0.##</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="time_format">HH:mm:ss</prop>
+				<prop key="whitespace_stripping">true</prop>
+				<prop key="classic_compatible">true</prop>
+				<prop key="template_exception_handler">ignore</prop>
+				<prop key="auto_import">"/ftl-lib/suredy-freemarker-macro.ftl" as t</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 上传文件大小限制。-1=不限制 -->
+		<property name="maxUploadSize" value="-1" />
+		<!-- 64K以下的文件直接存放到内存待用。1048576 = 1024*64 = 64K -->
+		<property name="maxInMemorySize" value="65536" />
+		<!-- 表单的编码格式 -->
+		<property name="defaultEncoding" value="UTF-8" />
+		<!-- 延迟接收文件 -->
+		<property name="resolveLazily" value="true" />
+	</bean>
+
+</beans>

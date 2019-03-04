@@ -1,0 +1,150 @@
+@left-compnent-width: 220px;
+@right-attr-width: 290px;
+
+.suredy-formbuilder {
+	display: block;
+	position: relative;
+	overflow: hidden;
+	height: 100%;
+
+	// common
+	[id^=frmb-][id$='-form-wrap'] {
+		display: block;
+		position: relative;
+		overflow: hidden;
+		height: 100%;
+	}
+}
+
+// left
+[id^=frmb-][id$='-form-wrap']>.cb-wrap {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: @left-compnent-width;
+	height: 100%;
+	overflow: auto;
+}
+
+// content
+[id^=frmb-][id$='-form-wrap']>.stage-wrap {
+    position: absolute;
+    top: 0;
+    left: @left-compnent-width;
+    right: @right-attr-width + 5px;
+    max-height: 100%;
+	margin: 0;
+	width: auto;
+    overflow: auto;
+
+    &.empty:after {
+	    top: 165px;
+	    font-size: 20px;
+	    font-weight: bold;
+	    color: #ddd;
+	}
+
+	& li {
+		width: 100%;
+
+		&.full {
+			width: 100%;
+		}
+		&.half {
+			width: 50%;
+			display: inline-block;
+		}
+		&.big-small {
+			width: 66.6666666666%;
+			display: inline-block;
+		}
+		&.small {
+			width: 33.3333333333%;
+			display: inline-block;
+		}
+
+		&.editing {
+			background-color: #fcf8e3;
+		}
+
+		&>label,
+		&>.field-label,
+		&>.tooltip-element,
+		&>.required-asterisk {
+			display: none !important;
+		}
+
+		&>.field-actions {
+			z-index: 1000;
+		}
+
+		& .checkbox-group,
+		& .radio-group {
+			&>input {
+				margin-right: 0 !important;
+			}
+			&>label {
+				margin-right: 10px !important;
+			}
+		}
+
+		& [type="checkbox"] {
+			display: inline-block;
+			margin: 0 !important;
+
+			+label {
+				display: inline-block !important;
+			}
+		}
+	}
+}
+
+// right
+[id^=frmb-][id$='-form-wrap'] .frmb li.form-field.editing .frm-holder {
+	position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: @right-attr-width;
+	overflow: auto;
+
+    &>.form-elements {
+    	&,
+    	& * {
+    		margin: 0;
+    	}
+
+    	& .false-label:first-child, 
+	    & label:first-child,
+	    & .input-wrap,
+	    & .sortable-options-wrap {
+	    	display: block;
+	    	width: 100%;
+	    	text-align: left;
+	    }
+
+	    & .access-wrap,
+	    & .close-field,
+	    & .other-wrap,
+	    & .toggle-wrap,
+	    & .description-wrap,
+	    & .multiple-wrap,
+	    & .maxlength-wrap {
+			display: none;
+		}
+    }
+}
+
+.formediter {
+	position: absolute;
+	left: 100% !important;
+
+	&.editing {
+		position: relative;
+		left: 0 !important;
+	}
+}
+
+[id^='frmb-'][id$='-view-data'].view-data {
+	display: none;
+}

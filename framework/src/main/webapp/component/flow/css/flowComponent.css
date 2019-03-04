@@ -1,0 +1,14 @@
+.panal-row{
+	padding-left:10px;
+	padding-right:10px;
+}
+.panal-col{
+	border:1px solid #ddd;
+	padding:2px;
+}
+.title{
+	font-weight: bold;
+	background-color: rgb(217, 237, 247);
+	color:#31708f;
+	padding:5px;
+}

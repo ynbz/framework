@@ -1,0 +1,155 @@
+ul.suredy-tree,
+ul.suredy-tree ul {
+	//display: block;
+	list-style: none;
+	padding: 0px;
+	margin: 0px;
+	background-color: #fff;
+	width: 100%;
+}
+
+ul.suredy-tree {
+	border: 1px solid #ddd;
+
+	&.in-container {
+		border: none;
+	}
+}
+
+ul.suredy-tree li.panel {
+	margin: 0px;
+	border: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+// 默认状态
+ul.suredy-tree .tree-node>.node-info {
+	display: table;
+	width: 100%;
+	border-bottom: 1px solid #ddd;
+	cursor: pointer;
+
+	&>.node-info-item {
+		display: table-cell;
+		vertical-align: middle;
+		text-align: center;
+		overflow: hidden;
+		word-wrap:break-word;
+		word-break:break-all;
+
+		&.text {
+			width: auto;
+			text-align: inherit;
+		}
+	}
+
+	&.collapsed {
+		&>.node-info-item>.angle-icon:before {
+			content: '\f105';
+		}
+	}
+}
+
+// tree.menu
+ul.suredy-tree.tree-menu .tree-node>.node-info {
+	&.collapsed {
+		&>.node-info-item>.angle-icon:before {
+			content: '\f104';
+		}
+	}
+}
+
+// 样式控制
+ul.suredy-tree {
+	& .tree-node>.node-info>.node-info-item {
+		font-size: @font-size;
+	}
+
+	&.tree-xl .tree-node>.node-info>.node-info-item {
+		width: @font-size + 3 + 9;
+		height: @font-size + 3 + 9;
+		line-height: @font-size + 3 + 9;
+		padding: 9px 0px;
+
+	}
+	&.tree-lg .tree-node>.node-info>.node-info-item {
+		width: @font-size + 3 + 7;
+		height: @font-size + 3 + 7;
+		line-height: @font-size + 3 + 7;
+		padding: 7px 0px;
+		
+	}
+	&.tree-normal .tree-node>.node-info>.node-info-item {
+		width: @font-size + 3 + 5;
+		height: @font-size + 3 + 5;
+		line-height: @font-size + 3 + 5;
+		padding: 5px 0px;
+	}
+	&.tree-sm .tree-node>.node-info>.node-info-item {
+		width: @font-size + 3 + 3;
+		height: @font-size + 3 + 3;
+		line-height: @font-size + 3 + 3;
+		padding: 3px 0px;
+	}
+
+	& .tree-node>.node-info>.node-info-item.text {
+		width: auto;
+	}
+}
+
+// 图标控制
+ul.suredy-tree {
+	.icon-suredy-tree-folder:before {
+		content: "\f07c";
+		color: #f9d863;
+	}
+
+	.icon-suredy-tree-file:before {
+		content: "\f0f6";
+		color: #888;
+	}
+
+	.icon-suredy-tree-dep:before {
+		content: '\f0e8';
+		color: #008000;
+	}
+
+	.icon-suredy-tree-user:before {
+		content: '\f007';
+		color: #d9534f;
+	}
+
+	& .collapsed {
+		.icon-suredy-tree-folder:before {
+			content: "\f07b";
+			color: #f9d863;
+		}
+	}
+
+	& .tree-node.active>.node-info>.node-info-item>.checkbox-icon:before {
+		content: '\f046';
+	}
+}
+
+// 鼠标滑动样式
+ul.suredy-tree .tree-node {
+	&>.node-info:hover>.node-info-item,
+	&>.node-info:hover>.node-info-item>[class^="icon-"]:before,
+	&>.node-info:hover>.node-info-item>[class*=" icon-"]:before
+	{
+		background-color: #a9d7b6 !important;
+		color: #fff !important;
+	}
+}
+
+// 激活节点状态
+ul.suredy-tree .tree-node.active {
+	&>.node-info>.node-info-item,
+	&>.node-info>.node-info-item>[class^="icon-"]:before,
+	&>.node-info>.node-info-item>[class*=" icon-"]:before
+	{
+		background-color: #7fb78f !important;
+		color: #fff !important;
+	}
+}
